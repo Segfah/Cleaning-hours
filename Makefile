@@ -2,14 +2,12 @@
 
 # Variables
 DOCKER_COMPOSE = docker compose
-DOCKER_CLEAN_CONTAINERS = docker rm -f $$(docker ps -aq)
-DOCKER_CLEAN_IMAGES = docker rmi -f $$(docker images -q)  # -f (force) to ensure removal of images
 
 # Targets
-.PHONY: run clean fclean
+.PHONY: run all clean fclean
 
 # Build and start containers in detached mode
-all:
+run:
 	$(DOCKER_COMPOSE) up --build
 
 all:
@@ -21,5 +19,7 @@ clean:
 
 # Combination of clean, remove all containers, remove all images
 fclean: clean
-	$(DOCKER_CLEAN_CONTAINERS)
-	$(DOCKER_CLEAN_IMAGES)
+	# Remove all containers
+	@containers=$$(docker ps -aq) && if [ -n "$$containers" ]; then docker rm -f $$containers; fi
+	# Remove all images
+	@images=$$(docker images -q) && if [ -n "$$images" ]; then docker rmi -f $$images; fi
