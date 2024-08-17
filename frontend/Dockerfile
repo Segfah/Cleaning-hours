@@ -17,9 +17,6 @@ COPY . .
 EXPOSE 3000
 
 
-# Comando para iniciar la aplicación en modo de desarrollo
-CMD ["npm", "run", "dev"]
-
-# Construye la aplicación para producción
+# Construye la aplicación
 #RUN npm run build
-#CMD ["npm", "start"]
+CMD ["npm", "start"]
